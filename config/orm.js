@@ -12,7 +12,7 @@ const orm = {
         })
     },
     insertOne: function(tableName, insertCol, insertValue, cb) {
-        let queryString = "INSERT INTO ?? (??) VALUES (??)";
+        let queryString = "INSERT INTO ?? (??) VALUES (?)";
         connection.query(queryString,[tableName, insertCol, insertValue], function(err, result) {
 
             if (err) {
@@ -21,9 +21,9 @@ const orm = {
               cb(result);
         })
     },
-    updateOne: function(tableName, colToChange, colUpdate, colName, colValue, cb) {
+    updateOne: function(tableName, colObj, condition, cb) {
         let queryString = "UPDATE ?? SET ?? = ? WHERE ?? = ?";
-        connection.query(queryString,[tableName, colToChange, colUpdate, colName, colValue], function(err, result) {
+        connection.query(queryString,[tableName, colObj, condition], function(err, result) {
 
             if (err) {
                 throw err;

@@ -12,8 +12,8 @@ const burger = {
             cb(res);
         })
     },
-    updateOne: function(colToChange, colUpdate, colName, colValue, cb) {
-        orm.updateOne("burgers", colToChange, colUpdate, colName, colValue, function(res) {
+    updateOne: function(colToChange, condition, cb) {
+        orm.updateOne("burgers", colToChange, condition, function(res) {
             cb(res);
         })
     }
