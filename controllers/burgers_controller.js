@@ -6,20 +6,6 @@ const burger = require("../models/burger.js");
 
 
 
-router.post("/", function(req,res) {
-
-    let userBurger = req.body.burger;
-
-    console.log(userBurger);
-    
-    burger.insertOne("burger_name", userBurger, function(result) {
-
-        //res.json({ id: result.insertId });
-
-    })
-
-});
-
 router.get("/", function(req, res) {
 
     burger.selectAll(function(data) {
@@ -39,29 +25,35 @@ router.get("/", function(req, res) {
 });
 
 
-router.put("/", function(req, res) {
+router.post("/", function(req, res) {
 
-    let condition = "burger_name = "+ req.body.burger;
+    console.log(req.body.burger_name);
+    
+	if(req.body.burger_name !== "") {
 
-    burger.updateOne({devoured: req.body.devoured}, condition, function(result) {
 
-        if (result.changedRows == 0) {
+		burger.insertOne(req.body.burger_name.trim(), function(res) {
 
-            // If no rows were changed, then the ID must not exist, so 404
+            //res.redirect("/");
+             
+		});
+	}
+});
 
-            return res.status(404).end();
 
-        } else {
+router.put("/:id", function(req, res) {
 
-            res.status(200).end();
-
-        }
-
-    })
-
+    let updateBurger = req.params;
+        
+    console.log(updateBurger.id);    
+        
+    burger.updateOne(updateBurger.id, function(res) {
+            
+        //res.redirect("/");
+        
+    });
+    
 })
-
-
 
 
 

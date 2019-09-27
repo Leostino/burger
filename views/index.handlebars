@@ -1,29 +1,45 @@
-<div class="container d-flex flex-column align-items-center">
-<img class="mt-3" src="/assets/image/burger.jpg" alt="Nice Burger" width="150px">
+<div class="container">
+<div id="image-div" class="d-flex justify-content-center">
+<img class="mt-3 ml-2" src="/assets/image/burger.jpg" alt="Nice Burger" width="150px">
 
-<h1>The Burger App</h1>
-
-<div class="burger-display">
-    
-    <ol class="waiting">
-        {{#each burgers}}
-        {{#unless devoured}}
-        {{> burgers/burger devoured=false}}
-        {{/unless}}
-        {{/each}}
-    </ol>
-    
-    <ol class="devoured">
-       {{#each burgers}}
-        {{#if devoured}}
-        {{> burgers/burger devoured=true}}
-        {{/if}}
-        {{/each}}
-
-    </ol>
 </div>
-<form class="container d-flex flex-column align-items-center">
-<textarea type="text" id="userBurger" name="burger" placeholder="type your burger here"></textarea>
-<button class="btn btn-primary mt-2" id="submitButton" type="submit"><strong>Submit</strong></button>
+
+<h1 class="text-center">The Burger App</h1>
+
+
+<form action="/" method="POST" class="d-flex flex-column align-items-center">
+<input type="text" id="userBurger" name="burger_name" placeholder="type your burger here"></input>
+<button class="btn btn-primary mt-2" type="submit"><strong>Add Burger</strong></button>
 </form>
+
+<section class="row" id="burgers-container">
+
+		<div class="col-md-6 mt-5" id="burgers-available">
+			<h6 class="ml-5">Burgers Available</h6>
+			{{#each burgers}}
+				{{#unless this.devoured}}
+				  <div class="d-flex flex-row justify-content-around mt-5 mr-5">
+                      
+						<p class="d-inline mr-5"><span>{{id}}</span>. {{burger_name}}</p>
+						<form id="update-form" action="/">
+						<input type="hidden" value="{{this.id}}"></input>
+				       <button data-id="{{id}}" data-devour="{{devoured}}" class="devour-button btn btn-primary btn-sm mr-5">
+                           Devour!!
+                        </button>
+						</form>
+			      </div>
+				{{/unless}}
+			{{/each}}
+	</div>
+	<div class="col-md-6 mt-5 text-center" id="burgers-devoured">
+			<h6>Devoured Burgers</h6>
+			{{#each burgers}}
+				{{#if this.devoured}}
+				  <div class="burger"> <span>{{id}}</span>. {{burger_name}}</div>
+				{{/if}}
+			{{/each}}
+	</div>
+</section>
+
 </div>
+
